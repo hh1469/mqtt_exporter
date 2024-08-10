@@ -21,7 +21,7 @@ class ArgumentParserReadFileAction(argparse.Action):
         if not isinstance(values, str):
             raise argparse.ArgumentError(self, "value must be a sring")
         with open(values, "r", encoding="utf-8") as f:
-            setattr(namespace, self.dest, f.readline())
+            setattr(namespace, self.dest, f.readline().strip())
 
 
 logging.basicConfig(
