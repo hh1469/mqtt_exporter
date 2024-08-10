@@ -19,7 +19,7 @@
     overlay = final: prev: {
       mqtt_exporter = prev.python3Packages.buildPythonPackage rec {
         pname = "mqtt_exporter";
-        version = "0.1.0";
+        version = "0.3.0";
 
         src = ./.;
 

@@ -126,10 +126,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print(args)
-
     start_http_server(8000)
-    aqara_leakage_2_state.state("not_seen")
+    aqara_leakage_1_state.state("not_seen")
     aqara_leakage_2_state.state("not_seen")
     while True:
         mqtt_loop(args.mqtt_broker, args.mqtt_user, args.passwd)
