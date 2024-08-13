@@ -37,7 +37,7 @@
 
         propagatedBuildInputs = with prev; [
           python3Packages.paho-mqtt
-          prev.python3Packages.prometheus-client
+          python3Packages.prometheus-client
         ];
       };
     };
