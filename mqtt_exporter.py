@@ -90,8 +90,8 @@ def read_aqara_leakage_state(message):
     try:
         logger.debug(
             "read_aqara_leakage_state %s %s",
-            message.topic if message and "topic" in message else "",
-            message.payload if message and "payload" in message else "",
+            message.topic if message else "",
+            message.payload if message else "",
         )
         json_data = json.loads(message.payload.decode())
         val = json_data.get("water_leak")
