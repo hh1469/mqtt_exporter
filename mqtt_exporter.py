@@ -45,6 +45,12 @@ aqara_leakage_2_state = Enum(
     states=["water", "dry", "unknown", "not_seen"],
 )
 
+aqara_leakage_3_state = Enum(
+    "aqara_leakage_3_state",
+    "Sensor state",
+    states=["water", "dry", "unknown", "not_seen"],
+)
+
 
 def on_connect(client, _userdata, _flags, rc):
     """
@@ -52,8 +58,9 @@ def on_connect(client, _userdata, _flags, rc):
     """
     if rc == 0:
         logger.debug("subscribe")
-        client.subscribe("zigbee2mqtt/Aqara leakage sensor 1/#")
-        client.subscribe("zigbee2mqtt/Aqara leakage sensor 2/#")
+        client.subscribe("zigbee/Aqara leakage sensor 1/#")
+        client.subscribe("zigbee/Aqara leakage sensor 2/#")
+        client.subscribe("zigbee/Aqara leakage sensor 3/#")
         # client.subscribe("zigbee2mqtt/#")
     else:
         logger.error("on_connect status %s", rc)
@@ -64,10 +71,12 @@ def on_message(_client, _userdata, message):
     mqtt message handler
     """
     try:
-        if message.topic == "zigbee2mqtt/Aqara leakage sensor 1":
+        if message.topic == "zigbee/Aqara leakage sensor 1":
             aqara_leakage_1_state.state(read_aqara_leakage_state(message))
-        elif message.topic == "zigbee2mqtt/Aqara leakage sensor 2":
+        elif message.topic == "zigbee/Aqara leakage sensor 2":
             aqara_leakage_2_state.state(read_aqara_leakage_state(message))
+        elif message.topic == "zigbee/Aqara leakage sensor 3":
+            aqara_leakage_3_state.state(read_aqara_leakage_state(message))
         else:
             pass
     except ValueError as e:
@@ -129,5 +138,6 @@ if __name__ == "__main__":
     start_http_server(8000)
     aqara_leakage_1_state.state("not_seen")
     aqara_leakage_2_state.state("not_seen")
+    aqara_leakage_3_state.state("not_seen")
     while True:
         mqtt_loop(args.mqtt_broker, args.mqtt_user, args.passwd)
